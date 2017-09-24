@@ -1,0 +1,23 @@
+{
+  "name": "call",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-animation-frame": "^0.3.4",
+    "react-dom": "^15.6.1",
+    "react-icons": "^2.2.5",
+    "react-karaoke-lyric": "^0.2.0",
+    "react-scripts": "1.0.13",
+    "react-vtt": "^0.2.3",
+    "react-youtube": "^7.4.0",
+    "webpack": "^3.6.0",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
