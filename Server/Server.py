@@ -5,26 +5,23 @@ Created on Fri Sep 22 22:42:13 2017
 @author: Rajith
 """
 
-from flask_socketio import SocketIO, emit
 from flask import Flask, request
 import json, csv
 import Logger
+
+songDir = '../call/src/goblue.txt'
     
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
-print("Starting Server")
 l = Logger.Logger()
 choreography = {}
-timeList = [100, 120, 130]
-'''
-with open('timetable.csv','rb) as file:
+timeList = []
+with open(songDir,'rb') as file:
     reader = csv.reader(file, delimiter="\t")
     for row in reader:
-       data = row.split('\t) 
-       choreography.update({ data[0] : data[1] })
-       timeList.append(data[0])
-'''
+        data = row.strip()
+        choreography.update({ data : "shake" })
+        timeList.append(data)
 
 @app.route('/',methods=["GET"])
 def postInfo():
@@ -86,15 +83,7 @@ def getScoreData():
     if l is None:
         return ""
     return json.dumps(l.players);
-'''
-@app.route("/socket.io/")
-def asdf():
-    if request.method is "GET":
-        return ""
-    json = request.get_json(silent=True)
-    print(json)
-    return ""
-   ''' 
+
 # For debugging
 @app.route("/init/",methods=["GET"])
 def startLogger():  
@@ -113,7 +102,3 @@ def playerJoin(username):
     if len(l.players) == 3:
         l.state = Logger.GameState.Playing
     return "Joined"
-
-@socketio.on('start')
-def reply():
-    emit('Response')
