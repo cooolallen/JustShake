@@ -14,6 +14,7 @@ songDir = '../call/src/goblue.txt'
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 l = Logger.Logger()
+players =
 choreography = {}
 timeList = []
 with open(songDir,'rt') as file:
@@ -91,7 +92,7 @@ def startLogger():
     return "Initialization Successful"
 # For debugging
 @app.route('/terminate/',methods=["GET"])
-def stopLoggeR():
+def stopLogger():
     l.state = Logger.GameState.Done
     return "Termination Sucessful"
 # For debugging    
