@@ -21,6 +21,7 @@ class GameState(Enum):
     Done = 2
 
 class Logger(metaclass=Singleton):
+    
     def __init__(self):
         self.startTime = time()     
         self.players = {}  

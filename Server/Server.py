@@ -21,7 +21,7 @@ with open(songDir,'rt') as file:
     for row in reader:
         data = row[0].strip()
         choreography.update({ data : "shake" })
-        timeList.append(data)
+        timeList.append(float(data))
 
 @app.route('/',methods=["GET"])
 def postInfo():
@@ -32,7 +32,7 @@ def postInfo():
         '''print(json)'''
         username = json['userID']
         data = json['data']
-        timestamp = json['time']
+        timestamp = float(json['time'])
         l.updateScores(username, data, timestamp)
         return "Action recieved"
     elif 'userID' in json:
@@ -49,9 +49,9 @@ def gameStatus():
     :param: none
     :returns: string describing the status of the game
     '''        
-    if l.state is Logger.GameState.Playing:
+    if l.state is Logger.GameState.Waiting:
         return "GAME WAIT"
-    if l is None:
+    if l.state is Logger.GameState.Playing:
         return "GAME PLAYING"
     return "GAME OVER"
 
@@ -87,7 +87,13 @@ def getScoreData():
 # For debugging
 @app.route("/init/",methods=["GET"])
 def startLogger():  
+    l.state = Logger.GameState.Playing
     return "Initialization Successful"
+# For debugging
+@app.route('/terminate/',methods=["GET"])
+def stopLoggeR():
+    l.state = Logger.GameState.Done
+    return "Termination Sucessful"
 # For debugging    
 @app.route('/data/<string:username>/<string:data>/<string:timestamp>')
 def specifyAction(username,data,timestamp):
