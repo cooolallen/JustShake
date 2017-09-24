@@ -16,10 +16,10 @@ app.config['SECRET_KEY'] = 'secret!'
 l = Logger.Logger()
 choreography = {}
 timeList = []
-with open(songDir,'rb') as file:
+with open(songDir,'rt') as file:
     reader = csv.reader(file, delimiter="\t")
     for row in reader:
-        data = row.strip()
+        data = row[0].strip()
         choreography.update({ data : "shake" })
         timeList.append(data)
 
